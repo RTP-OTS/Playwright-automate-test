@@ -1,0 +1,29 @@
+pipeline {
+  agent any
+
+  environment {
+    PLAYWRIGHT_VERSION = '1.41.1-jammy'
+  }
+
+  tools {
+    nodejs 'NodeJS 20.9'
+    // Specify other tools as needed
+  }
+  stages {
+    stage('install playwright') {
+      steps {
+        sh '''
+          npm i -D @playwright/test
+          npx playwright install
+        '''
+      }
+
+    stage('Smoke test') {
+      steps {
+        sh '''
+          npx playwright test e2e-test.spec.spec --project webkit --reporter=line
+        '''
+      }
+    }
+  }
+}
