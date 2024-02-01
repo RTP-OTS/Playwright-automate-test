@@ -1,0 +1,29 @@
+{
+  "name": "playwright-jenkins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "regressiontest": "npx playwright test AutomateWeb/tc01.spec.js --reporter=list",
+    "smoketest_backend": "npx playwright test ApiTesting/tc01_api.spec.js --reporter=list",
+    "apitest": "npx playwright test ApiTesting/tc02_api.spec.js --reporter=list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RTP-OTS/playwright-jenkins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RTP-OTS/playwright-jenkins/issues"
+  },
+  "homepage": "https://github.com/RTP-OTS/playwright-jenkins#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.41.1",
+    "@types/node": "^20.10.7"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
