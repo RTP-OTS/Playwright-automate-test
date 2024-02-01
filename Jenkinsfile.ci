@@ -9,6 +9,7 @@ pipeline {
     nodejs 'NodeJS 20.9'
     // Specify other tools as needed
   }
+  
   stages {
     stage('install playwright') {
       steps {
@@ -17,11 +18,13 @@ pipeline {
           npx playwright install
         '''
       }
+    }
 
-    stage('Smoke test') {
+
+    stage('Verify shop end flow') {
       steps {
         sh '''
-          npx playwright test e2e-test.spec.spec --project webkit --reporter=line
+          npx playwright test e2e-test.spec.js --project webkit --reporter=line
         '''
       }
     }
