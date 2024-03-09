@@ -29,6 +29,14 @@ pipeline {
       }
     }
 
+        stage('Verify shop end flow') {
+      steps {
+        sh '''
+          npx playwright test tc02_api.spec.js --project webkit --reporter=line
+        '''
+      }
+    }
+
   steps {
         // สำหรับ HTML Publisher Plugin
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Test Report'])
@@ -36,7 +44,7 @@ pipeline {
     post {
         failure {
   
-            mail to: 'rattapon.o@extend-os.com',
+            mail to: 'rattapon.ot@gmail.com',
                  cc: 'rattapon.ot@gmail.com',
                  subject: "Failed Pipeline Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER}",
                  body: "Something is wrong with this build: ${env.BUILD_URL}"
