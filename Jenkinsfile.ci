@@ -28,5 +28,15 @@ pipeline {
         '''
       }
     }
+
+    post {
+        failure {
+  
+            mail to: 'rattapon.o@extend-os.com',
+                 cc: 'rattapon.ot@gmail.com',
+                 subject: "Failed Pipeline Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER}",
+                 body: "Something is wrong with this build: ${env.BUILD_URL}"
+        }
+    }
   }
 }

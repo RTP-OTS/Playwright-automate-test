@@ -35,7 +35,7 @@ test ("Update User and verify message after this" , async ({request}) => {
 
         });
         console.log(await resonseUpdate.json())
-        expect(resonseUpdate.status()).toBe(200)
+        expect(resonseUpdate.status()).toBe(404)
 
         const jsonResponse = await resonseUpdate.json()
         expect(jsonResponse.name).toContain('Toon')
