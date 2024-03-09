@@ -29,6 +29,10 @@ pipeline {
       }
     }
 
+  steps {
+        // สำหรับ HTML Publisher Plugin
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Test Report'])
+    }
     post {
         failure {
   
@@ -38,5 +42,7 @@ pipeline {
                  body: "Something is wrong with this build: ${env.BUILD_URL}"
         }
     }
+
+
   }
 }
