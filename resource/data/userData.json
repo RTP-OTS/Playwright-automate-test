@@ -1,0 +1,17 @@
+
+{
+    "member":{
+        "validEmail": "eve.holt@reqres.in",
+        "invalidEmail": "invalid-email",
+        "validPassword": "pistol",
+        "invalidPassword":"invalid-password"
+    },
+    "user": {
+        "name": "Tester",
+        "job": "Kub"
+    }
+      
+      
+
+}
+  

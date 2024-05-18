@@ -1,25 +1,29 @@
-class UserAPI {
-    constructor(request) {
-        this.request = request;
-    }
+const baseURL = 'https://reqres.in';
 
-    async createUser(username, password, email) {
-        const response = await this.request.post('/api/users', {
-            data: { username, password, email },
-            headers: { "Accept": "application/json" }
-        });
-        expect(response.status()).toBe(201);
-        return await response.json();
-    }
+class UserApi {
+  constructor(request) {
+    this.request = request;
+  }
 
-    async loginUser(username, password) {
-        const response = await this.request.post('/api/users/login', {
-            data: { username, password },
-            headers: { "Accept": "application/json" }
-        });
-        expect(response.status()).toBe(200);
-        return await response.json();
-    }
+  async createUser(data) {
+    return this.request.post(`${baseURL}/api/users`, {
+      data
+    });
+  }
+
+  async getUser(userId) {
+    return this.request.get(`${baseURL}/api/users/${userId}`);
+  }
+
+  async updateUser(userId, data) {
+    return this.request.put(`${baseURL}/api/users/${userId}`, {
+      data
+    });
+  }
+
+  async deleteUser(userId) {
+    return this.request.delete(`${baseURL}/api/users/${userId}`);
+  }
 }
 
-module.exports = { UserAPI };
+module.exports = UserApi;

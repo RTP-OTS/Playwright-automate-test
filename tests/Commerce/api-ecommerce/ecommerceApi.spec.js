@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
-const { ProductAPI } = require('../../page/api/productApi');
-const { UserAPI } = require('../../page/api/userApi');
-const { CartAPI } = require('../../page/api/cartApi');
+const { ProductAPI } = require('../../../page/api/productApi');
+const { UserAPI } = require('../../../page/api/userApi');
+const { CartAPI } = require('../../../page/api/cartApi');
 
 test.describe('eCommerce API Tests', () => {
     let productAPI, userAPI, cartAPI;
