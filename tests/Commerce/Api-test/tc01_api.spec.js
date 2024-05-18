@@ -10,7 +10,7 @@ test ("Get User" , async ({request}) => {
 test ("Create User" , async ({request}) => {
     const resonseCreate =await request.post('https://reqres.in/api/users',
     {
-        data:{ "name":enFirstname ,
+        data:{ "name":"Kitty" ,
         "job": "System Engineer" },
         headers:{"Accept":"application/json"}
 
@@ -18,7 +18,7 @@ test ("Create User" , async ({request}) => {
         console.log(await resonseCreate.json())
         expect(resonseCreate.status()).toBe(201)
 
-        var res=await resonseCreate.json()
+        let res=await resonseCreate.json()
         userid=res.id
     })
 

@@ -7,7 +7,8 @@ class UserApi {
 
   async createUser(data) {
     return this.request.post(`${baseURL}/api/users`, {
-      data
+      data,
+      headers:{"Accept":"application/json"}
     });
   }
 
@@ -17,7 +18,8 @@ class UserApi {
 
   async updateUser(userId, data) {
     return this.request.put(`${baseURL}/api/users/${userId}`, {
-      data
+      data,
+      headers:{"Accept":"application/json"}
     });
   }
 
