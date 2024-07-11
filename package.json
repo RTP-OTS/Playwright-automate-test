@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "regressiontest": "npx playwright test AutomateWeb/tc01.spec.js --reporter=list",
-    "smoketest_backend": "npx playwright test ApiTesting/tc01_api.spec.js --reporter=list",
-    "apitest": "npx playwright test ApiTesting/tc02_api.spec.js --reporter=list"
+    "regressiontest": "npx playwright test AutomateWeb/tc01.spec.js --reporter=list  --project chromium",
+    "smoketest_backend": "npx playwright test ApiTesting/tc01_api.spec.js --reporter=list  --project chromium",
+    "apitest": "npx playwright test ApiTesting/tc02_api.spec.js --reporter=list  --project chromium",
+    "e2e": "npx playwright test tests/web/e2e-test.spec.js --repoter=list --project chromium"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RTP-OTS/playwright-jenkins.git"
   },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,4 +28,5 @@
   "dependencies": {
     "js-yaml": "^4.1.0"
   }
+  
 }

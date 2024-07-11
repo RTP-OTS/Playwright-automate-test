@@ -9,6 +9,13 @@
     "user": {
         "name": "Kitty Lion",
         "job": "Developer"
+    },
+    "member1":{
+        "firstName":"John",
+        "lastName":"Wong",
+        "password":"testabc1234",
+        "company":"tester"
+
     }
       
       

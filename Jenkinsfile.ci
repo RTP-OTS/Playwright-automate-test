@@ -21,7 +21,7 @@ pipeline {
     }
 
 
-    stage('Verify shop end flow') {
+    stage('Test web') {
       steps {
         sh '''
           npx playwright test e2e-test.spec.js --project webkit --reporter=line
@@ -29,7 +29,7 @@ pipeline {
       }
     }
 
-        stage('Verify shop end flow') {
+        stage('Test api') {
       steps {
         sh '''
           npx playwright test tc02_api.spec.js --project webkit --reporter=line

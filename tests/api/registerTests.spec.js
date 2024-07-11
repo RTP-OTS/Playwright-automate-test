@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import RegisterApi from '../../page/api/registerApi';
+import RegisterApi from '../../pageObjects/api/registerApi';
 import testData from '../../resource/data/userData.json';
 
 test.describe('Register User API Tests', () => {

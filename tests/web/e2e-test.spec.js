@@ -1,76 +1,48 @@
-const {test , expect} = require('@playwright/test')
-const JSONdata = require('../../resource/config.json')
+const { test , expect }=require ('@playwright/test');
+const { RegisterPage }=require  ('../../pageObjects/web/RegisterPage');
+const { LoginPage }=require ('../../pageObjects/web/LoginPage');
+const { generateRandomEmail }=require ('../../utils/function/utils_generateEmail');
+const { testData } = require('../../resource/data/userData.json')
 
-test ('Test shopping standard flow' , async ({page}) =>{
-    //step1
-    await page.goto(JSONdata.baseUrl);
-    await page.locator("#userEmail").fill(JSONdata.user.username);
-    await page.locator("#userPassword").fill(JSONdata.user.password);
-    await page.locator("#login").click();
+const randomEmail = generateRandomEmail();
+let registeredEmail;
+registeredEmail = randomEmail;
 
-    //step2
-    await page.waitForLoadState('networkidle');
-    const titileItem = await page.locator(".card-body b").allTextContents();
-    //console.log(titileItem);
-    const productName = "ADIDAS ORIGINAL";
-    expect(titileItem).toContain(productName);
-    const product = page.locator(".card-body");
-    const count = await product.count();
-    let i = 0;
-    while (i < count) {
-        const productText = await product.nth(i).locator("b").textContent();
-        if (productText === productName) {
-            await product.nth(i).getByText("Add To Cart").click();
-            break;
-        }
-        i++;
-    }
-
-    //step3
-    await page.locator('[routerlink="/dashboard/cart"]').click();
-    const itemIncart = await page.locator(".cartSection h3")
-    //console.log(await itemIncart.textContent());
-    await expect(itemIncart).toContainText(productName)
-
-    await page.locator("div li").first().waitFor();
-    const bool = await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible();
-    expect(bool).toBeTruthy();
-    await page.locator("text=Checkout").click();
-  
-    await page.locator("[placeholder*='Country']").type("ind");
-  
-    const dropdown = page.locator(".ta-results");
-    await dropdown.waitFor();
-    const buttons = await dropdown.locator("button").elementHandles();
-    for (const button of buttons) {
-        const text = await button.textContent();
-        if (text === " India") {
-            await button.click();
-            break;
-        }
-    }
-  
-    expect(page.locator(".user__name [type='text']").first()).toHaveText(JSONdata.user.username);
-    await page.locator(".action__submit").click();
-    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
-    const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
-    console.log(orderId);
-  
-    await page.locator("button[routerlink*='myorders']").click();
-    await page.locator("tbody").waitFor();
+test.describe('User Registration and Login Tests', () => {
+    test.describe.configure({ mode: 'serial' });
     
-    const rows = await page.locator("tbody tr");
-    let j = 0;
-    const rowCount = await rows.count();
-    while (j < rowCount) {
-        const rowOrderId = await rows.nth(j).locator("th").textContent();
-        if (orderId.includes(rowOrderId)) {
-            await rows.nth(j).locator("button").first().click();
-            break;
-        }
-        j++;
-    }
-    const orderIdDetails = await page.locator(".col-text").textContent();
-    expect(orderId.includes(orderIdDetails)).toBeTruthy();
-  
- });
+    test ('tc01-Register a new member' , async ({ page }) => {
+        const registerPage = new RegisterPage(page);
+        await registerPage.screenPage();
+        await registerPage.gotoLoginPage();
+        await registerPage.checkGender();
+        await registerPage.inputFirstname(member1.firstname);
+        await registerPage.inputLastname(member1.lastname);
+        await registerPage.inputBirthDay({index: 30});
+        await registerPage.inputBirthMonth({index: 8});
+        await registerPage.inputBirthYear({index: 80});
+        await registerPage.inputEmail(randomEmail)
+            console.log (registeredEmail)
+        await registerPage.inputCompany(member1.company);
+        await registerPage.checkNewsletter();
+        await registerPage.inputnewPassword(member1.password);
+        await registerPage.inputConfirmPassword(member1.password);
+        await registerPage.clickRegister();
+        // Waiting for url change
+        await registerPage.registerSuccess();
+    });
+    test ('tc02-Login with new member' , async ({ page }) => {
+        const loginPage = new LoginPage (page);
+        await loginPage.screenPage();
+        await loginPage.gotoLoginPage();
+        await loginPage.inputEmail(registeredEmail);
+            console.log (registeredEmail)
+        await loginPage.inputPassword(member1.password);
+        await loginPage.clickforlogin();
+        await loginPage.loginSuccess();
+        expect(page.url()).toBe('https://demo.nopcommerce.com/customer/info')
+        await loginPage.editFistname('Rattapon');
+        expect(registeredEmail).toBe(randomEmail);
+    });
+
+});
